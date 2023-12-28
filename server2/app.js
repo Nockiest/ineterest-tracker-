@@ -34,6 +34,10 @@ app.get('/accounts', (req, res) => {
   res.json(financeAccounts);
 });
 
+app.get('/', (req, res) => {
+  res.json('hello world go to /accounts');
+});
+
 
 
 // API endpoint to set account data

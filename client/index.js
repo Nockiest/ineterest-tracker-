@@ -1,15 +1,19 @@
 // // Retrieve account data
 function getAccountData() {
-  fetch("http://localhost:3000/accounts")
+  console.log('getting account data')
+  fetch("https://teesting-srver.onrender.com/accounts")
     .then((response) => response.json())
     .then((data) => {
       console.log("Account data:", data);
+      let total = 0
       data.forEach((account) => {
         const element = document.querySelector(`[name="${account.name}"]`);
         if (element) {
           element.innerHTML = account.value + " CZK";
+          total += account.value
         }
       });
+      displayExpecetedEarnings(total/100*(4.75/12/2))
     })
     .catch((error) => {
       console.error("Error retrieving account data:", error);
@@ -18,7 +22,7 @@ function getAccountData() {
 
   function changeAccountValue(account, balanceChange) {
     console.log(account, balanceChange)
-  fetch("http://localhost:3000/insert", {
+  fetch("https://teesting-srver.onrender.com/insert", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -69,6 +73,11 @@ function displayNextInterestTimeRemaining() {
 
   // Set the innerHTML of the element to the formatted time remaining
   nextInterestElement.innerHTML = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+}
+
+function displayExpecetedEarnings(earnings){
+  const futureEarningsDisplay = document.getElementById('expected-earnings')
+  futureEarningsDisplay.innerHTML  = earnings
 }
 
 setInterval(displayNextInterestTimeRemaining, 1000);
